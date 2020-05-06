@@ -244,10 +244,10 @@ function isTaggable(t: string): boolean {
  */
 export function registerAutoTags(autoTags: Record<string, string>): void {
   pulumi.runtime.registerStackTransformation((args) => {
-    console.log(`Attempting to add tag to ${args.props["tags"]}`);
+    pulumi.log.info(`Attempting to add tag to ${args.props["tags"]}`);
     if (isTaggable(args.type)) {
-      console.log(`Tagging with ${autoTags}`);
-      args.props["tags"] = { ...args.props["tags"], ...autoTags };
+      pulumi.log.info(`Tagging with ${autoTags}`);
+      args.props["tags"] = { ...autoTags, ...args.props["tags"] };
       return { props: args.props, opts: args.opts };
     }
     return undefined;

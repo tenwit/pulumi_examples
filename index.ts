@@ -11,7 +11,7 @@ registerAutoTags({
   "Env": "PoC",
 });
 
-const vpc = new awsx.ec2.Vpc("proof_of_concept", {
+const vpc = new awsx.ec2.Vpc("PoC", {
   cidrBlock: "192.168.96.0/23",
   numberOfAvailabilityZones: 2,
   numberOfNatGateways: 0,
