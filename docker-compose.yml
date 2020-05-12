@@ -1,0 +1,57 @@
+version: "3.7"
+services:
+  login:
+    image: pams/pulumi
+    environment:
+      - PULUMI_ACCESS_TOKEN
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    command: login
+
+  npm:
+    image: pams/pulumi
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    entrypoint: npm
+
+  sh:
+    image: pams/pulumi
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    entrypoint: sh
+
+  pulumi:
+    image: pams/pulumi
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+      - type: bind
+        source: ~/.aws
+        target: /app/.aws
+    working_dir: /app
+
+  new:
+    image: pams/pulumi
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    command:
+      - new
+      - -c
+      - "aws:region=ap-southeast-2"
+      - aws-typescript
+      - -n
+      - ${PROJECT}
+      - -d
+      - ${DESCRIPTION}
+      - -s
+      - ${STACK}
+      - --force
